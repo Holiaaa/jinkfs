@@ -5,6 +5,15 @@
 #define END_BOOTLOADER 512
 #define END_FILETABLEOFFSET 2560
 
+/*
+ *
+ * JinkFS Source code
+ * Made by Téo JAUFFRET
+ *
+ * jinkfsutil.c - Utility to see informations about disk and list all the entries present in the FileTableEntries.
+ *
+ */
+
 #pragma pack(push, 1)
 typedef struct {   
     uint8_t Signature[3];
