@@ -5,15 +5,6 @@
 #define END_BOOTLOADER 512
 #define END_FILETABLEOFFSET 2560
 
-/*
- *
- * JinkFS Source code
- * Made by Téo JAUFFRET
- *
- * jinkfsutil.c - Utility to see informations about disk and list all the entries present in the FileTableEntries.
- *
- */
-
 #pragma pack(push, 1)
 typedef struct {   
     uint8_t Signature[3];
@@ -46,7 +37,7 @@ int main(int argc, char **argv) {
 
     FILE *f = fopen(argv[1], "rb");
     if (!f) {
-        perror("unable to open %s file!\n", argv[1]);
+        perror("unable to open %s file!\n");
         return -1;
     }
 
@@ -87,7 +78,7 @@ int main(int argc, char **argv) {
         printf("BootableDisk\t: NO\n");
     }
 
-    printf("\nEntries found in the FileEntryTable :\n");
+    printf("\nEntries found in the FileEntryTable :\n\n");
 
     char FileEntryTable[sizeof(JinkFS_Entry) * 128];
     fseek(f, END_BOOTLOADER, SEEK_SET);
@@ -121,8 +112,24 @@ int main(int argc, char **argv) {
 
         printf("Reserved\t: %u\n", entry.Reserved);
         printf("Offset\t\t: 0x%X\n", entry.Offset);
-        printf("NumberOfBlocks\t: 0x%X\n", entry.NumberOfBlocks);
-        printf("\n");
+
+        char fileContent[((int)entry.NumberOfBlocks)*(int)headers.BytesPerBlock];
+        printf("NumberOfBlocks\t: 0x%X (%d B)\n", entry.NumberOfBlocks, sizeof(fileContent));
+
+        printf("\nContent of the file : \n");
+        fseek(f, ((int)entry.Offset-(int)0x7C00), SEEK_SET);
+        fread(fileContent, sizeof(fileContent), 1, f);
+
+        for (int i = 0; i < sizeof(fileContent); i++) {
+            if (fileContent[i] == 0xFFFFFFD6 || (i+1 < sizeof(fileContent) && fileContent[i+1] == 0xFFFFFFD6)) {
+                break;
+            }
+            printf("%02X ", fileContent[i]);
+            if ((i + 1) % 32 == 0) printf("\n");
+        }
+
+        printf("\n\n");
+        printf("----------------------------------\n");
     }
 
     printf("Totalizing a total of %d files present in the disk.\n", numberOfFile);
