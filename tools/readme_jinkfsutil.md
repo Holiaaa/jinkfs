@@ -28,6 +28,4 @@ Offset		: 0x8C00
 NumberOfBlocks	: 0x2
 
 Totalizing a total of 2 files present in the disk.
-SIZE OF A HEADER : 23
-
 ```
