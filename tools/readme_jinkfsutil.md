@@ -1,5 +1,5 @@
 # JinkFSUtil tool
-## used to show information about a JFS disk image
+Show information about a JFS disk image
 
 Using with using a JinkFS disk return something like this : 
 
