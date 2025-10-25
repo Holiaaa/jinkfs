@@ -27,7 +27,7 @@ ORG 0x7C00
 jmp start
 db 0x4A
 
-DiskLabel: db "JINKOS10"        ; Can be what you want
+DiskLabel: db "JINKBOOT"        ; Can be what you want
 BytesPerBlock: dw 1024          ; Number of bytes in 1 block
 Reserved: dw 0                  ; Reserved (for Jink OS)
 FileTableOffset: dd 0x7E00      ; Offset of where the FileTabel start
