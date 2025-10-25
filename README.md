@@ -27,12 +27,12 @@ ORG 0x7C00
 jmp start
 db 0x4A
 
-DiskLabel: db "JINKOS10"
-BytesPerBlock: dw 1024
-Reserved: dw 0
-FileTableOffset: dd 0x7E00
-BlockAreaOffset: dd 0x8800
-TotalOfEntries: db 128
+DiskLabel: db "JINKOS10"        ; Can be what you want
+BytesPerBlock: dw 1024          ; Number of bytes in 1 block
+Reserved: dw 0                  ; Reserved (for Jink OS)
+FileTableOffset: dd 0x7E00      ; Offset of where the FileTabel start
+BlockAreaOffset: dd 0x8800      ; Offset of where the block area start
+TotalOfEntries: db 128          ; Max number of entries. (2560/20 = 128)
 
 start:
     jmp $
