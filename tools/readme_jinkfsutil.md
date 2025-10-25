@@ -6,7 +6,7 @@ Using with using a JinkFS disk return something like this :
 ```
 JinkFS Disk Utility
 
-DiskLabel	: JINKOS10
+DiskLabel	: JINKBOOT
 BytesPerBlock	: 1024
 Reserved	: 1
 FileTableOffset	: 0X7E0000
