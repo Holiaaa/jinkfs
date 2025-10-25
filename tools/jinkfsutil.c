@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
 
     FILE *f = fopen(argv[1], "rb");
     if (!f) {
-        perror("unable to open %s file!\n");
+        perror("unable to open %s file!\n", argv[1]);
         return -1;
     }
 
