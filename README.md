@@ -1,5 +1,5 @@
 # Jink FS
-A simple file system designed for little OSDev projects
+A simple file system designed for little OSDev projects (used in JinkOS)
 
 ## Definition
 ### General struct
