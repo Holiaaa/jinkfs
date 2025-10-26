@@ -19,7 +19,7 @@ typedef struct {
     uint8_t Signature[3];
     uint8_t DiskLabel[8];
     uint16_t BytesPerBlock;
-    uint8_t Reserved;
+    uint16_t Reserved;
     uint32_t FileTableOffset;
     uint32_t BlockAreaOffset;
     uint8_t TotalOfEntries;
