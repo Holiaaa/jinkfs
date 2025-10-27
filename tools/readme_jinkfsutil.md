@@ -11,7 +11,7 @@ BytesPerBlock	: 1024
 Reserved	: 0
 FileTableOffset	: 0X7E0000
 BlockAreaOffset	: 0X880000
-TotalOfEntries	: 0
+TotalOfEntries	: 128
 BootableDisk	: YES
 
 Entries found in the FileEntryTable :
