@@ -157,4 +157,5 @@ BOOT_DISK equ 0x800
 
 NumSectors db 0
 
-times 510-($-$$) db 0
+times 510-($-$$) db 0           ; Remplit le reste du fichiers (jusqu'a 510 octet) avec des 0x00
+dw 0xAA55                       ; Signature du bootloader
