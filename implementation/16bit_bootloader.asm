@@ -2,19 +2,19 @@ BITS 16
 ORG 0x7C00
 
 ; Copyright (C) 2025 Téo JAUFFRET. All rights reserved.
-; JinkFS Assembly Implementation 16bit
+; JinkFS Assembly Implementation 16bit (with french comments)
 ;
 ; Status : beta2
 
-jmp start
-db 0x4A
+jmp start                       ; Jump au start (fais office de Signature[0] et Signature[1]
+db 0x4A                         ; Signature[2] obligatoire
 
-DiskLabel: db "JINKBOOT"
-BytesPerBlock: dw 1024
-Reserved: dw 0
-FileTableOffset: dd 0x7E00
-BlockAreaOffset: dd 0x8800
-TotalOfEntries: db 128
+DiskLabel: db "JINKBOOT"        ; Nom du disque (8 caractères max)
+BytesPerBlock: dw 1024          ; Combien d'octet par block
+Reserved: dw 0                  ; Reservé pour Jink OS
+FileTableOffset: dd 0x7E00      ; Offset ou la FET commence
+BlockAreaOffset: dd 0x8800      ; Offset ou la zone des blocks commence. (Inutilisé ici)
+TotalOfEntries: db 128          ; Nombre max d'entrée dans la FET
 
 start:
     cli                         ; Désactive les interruptions.
@@ -129,21 +129,21 @@ Print:
     xor bx, bx 
     xor dx, dx
 
-    mov ax, [KernelSizeLow]
-    shl ax, 2
+    mov ax, [KernelSizeLow]     ; On met dans AX, la valeur de [KernelSizeLow]
+    shl ax, 1                   ; On la multiplie par 2 (car 512 = 1 secteur, 1024 = 2 secteur)
 
-    mov ah, 0x2
-    mov al, al
-    mov ch, 0           
+    mov ah, 0x2                 ; On utilise le mode lecture de l'INT 13H
+    mov al, al                  ; Inutile ici mais sécurité
+    mov ch, 0
     mov dh, 0
-    mov cl, [NumSectors]
-    mov bx, 0x1000
-    mov dl, [BOOT_DISK]
-    int 0x13
-    jc DiskError
+    mov cl, [NumSectors]        ; On met dans CL, le nombre de secteurs a partir du quel il faut lire. ((Offset - 0x7C00) / 512)
+    mov bx, 0x1000              ; On stock le kernel en 0x1000
+    mov dl, [BOOT_DISK]         ; On lit sur le disque de BOOT.
+    int 0x13                    ; On execute l'interruption
+    jc DiskError                ; Si erreur on jump a DiskError
 
-    jmp 0x0000:0x1000
-    jmp $
+    jmp 0x0000:0x1000           ; Sinon on boot sur le kernel
+    jmp $                       ; Ne dois jamais se produire
 
 MsgFound db "KERNEL.BIN Found!", 0x0D, 0x0A, 0
 KernelName db "KERNEL  ", 0
